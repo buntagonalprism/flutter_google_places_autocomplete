@@ -301,6 +301,8 @@ Future<Prediction> showGooglePlacesAutocomplete(
     @required String apiKey,
     Mode mode = Mode.fullscreen,
     String hint = "Search",
+    TextStyle hintStyle,
+    InputDecoration hintDecoration,
     num offset,
     Location location,
     num radius,
@@ -320,6 +322,8 @@ Future<Prediction> showGooglePlacesAutocomplete(
         strictbounds: strictbounds,
         offset: offset,
         hint: hint,
+        hintStyle: hintStyle,
+        hintDecoration: hintDecoration,
         onError: onError,
       );
 
