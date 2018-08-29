@@ -11,6 +11,8 @@ import 'package:rxdart/rxdart.dart';
 class GooglePlacesAutocompleteWidget extends StatefulWidget {
   final String apiKey;
   final String hint;
+  final TextStyle hintStyle;
+  final InputDecoration hintDecoration;
   final Location location;
   final num offset;
   final num radius;
@@ -25,6 +27,8 @@ class GooglePlacesAutocompleteWidget extends StatefulWidget {
     @required this.apiKey,
     this.mode = Mode.fullscreen,
     this.hint = "Search",
+    this.hintStyle,
+    this.hintDecoration,
     this.offset,
     this.location,
     this.radius,
@@ -52,7 +56,10 @@ class _GooglePlacesAutocompleteScaffoldState
     extends GooglePlacesAutocompleteState {
   @override
   Widget build(BuildContext context) {
-    final appBar = new AppBar(title: new AppBarPlacesAutoCompleteTextField());
+    final appBar = new AppBar(title: new AppBarPlacesAutoCompleteTextField(
+      hintDecoration: widget.hintDecoration,
+      hintStyle: widget.hintStyle,
+    ));
     final body =
         new GooglePlacesAutocompleteResult(onTap: Navigator.of(context).pop);
     return new Scaffold(appBar: appBar, body: body);
@@ -193,6 +200,15 @@ class _GooglePlacesAutocompleteResult
 }
 
 class AppBarPlacesAutoCompleteTextField extends StatefulWidget {
+
+  final TextStyle hintStyle;
+  final InputDecoration hintDecoration;
+
+  AppBarPlacesAutoCompleteTextField({
+    this.hintStyle,
+    this.hintDecoration,
+  });
+
   @override
   _AppBarPlacesAutoCompleteTextFieldState createState() =>
       new _AppBarPlacesAutoCompleteTextFieldState();
@@ -211,8 +227,8 @@ class _AppBarPlacesAutoCompleteTextFieldState
         child: new TextField(
           controller: state._queryTextController,
           autofocus: true,
-          style: new TextStyle(color: Colors.white70, fontSize: 16.0),
-          decoration: new InputDecoration(
+          style: widget.hintStyle ?? new TextStyle(color: Colors.white70, fontSize: 16.0),
+          decoration: widget?.hintDecoration?.copyWith(hintText: state.widget.hint) ??  InputDecoration(
             hintText: state.widget.hint,
             hintStyle: new TextStyle(color: Colors.white30, fontSize: 16.0),
             border: InputBorder.none,
