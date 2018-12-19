@@ -349,7 +349,7 @@ abstract class GooglePlacesAutocompleteState
     super.initState();
     _queryTextController = new TextEditingController(text: "");
 
-    _places = new GoogleMapsPlaces(widget.apiKey);
+    _places = new GoogleMapsPlaces(apiKey: widget.apiKey);
     _searching = false;
 
     _queryTextController.addListener(_onQueryChange);
