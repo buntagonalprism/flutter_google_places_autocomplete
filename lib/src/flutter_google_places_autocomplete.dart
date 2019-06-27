@@ -12,6 +12,7 @@ class GooglePlacesAutocompleteWidget extends StatefulWidget {
   final String apiKey;
   final String hint;
   final TextStyle hintStyle;
+  final Color cursorColor;
   final InputDecoration hintDecoration;
   final Location location;
   final num offset;
@@ -28,6 +29,7 @@ class GooglePlacesAutocompleteWidget extends StatefulWidget {
     this.mode = Mode.fullscreen,
     this.hint = "Search",
     this.hintStyle,
+    this.cursorColor,
     this.hintDecoration,
     this.offset,
     this.location,
@@ -57,6 +59,7 @@ class _GooglePlacesAutocompleteScaffoldState
   @override
   Widget build(BuildContext context) {
     final appBar = new AppBar(title: new AppBarPlacesAutoCompleteTextField(
+      cursorColor: widget.cursorColor,
       hintDecoration: widget.hintDecoration,
       hintStyle: widget.hintStyle,
     ));
@@ -201,10 +204,12 @@ class _GooglePlacesAutocompleteResult
 
 class AppBarPlacesAutoCompleteTextField extends StatefulWidget {
 
+  final Color cursorColor;
   final TextStyle hintStyle;
   final InputDecoration hintDecoration;
 
   AppBarPlacesAutoCompleteTextField({
+    this.cursorColor,
     this.hintStyle,
     this.hintDecoration,
   });
@@ -225,6 +230,7 @@ class _AppBarPlacesAutoCompleteTextFieldState
         alignment: Alignment.topLeft,
         margin: new EdgeInsets.only(top: 4.0),
         child: new TextField(
+          cursorColor: widget.cursorColor,
           controller: state._queryTextController,
           autofocus: true,
           style: widget.hintStyle ?? new TextStyle(color: Colors.white70, fontSize: 16.0),
@@ -306,6 +312,7 @@ Future<Prediction> showGooglePlacesAutocomplete(
     num offset,
     Location location,
     num radius,
+    Color cursorColor,
     String language,
     List<String> types,
     List<Component> components,
@@ -319,6 +326,7 @@ Future<Prediction> showGooglePlacesAutocomplete(
         types: types,
         location: location,
         radius: radius,
+        cursorColor: cursorColor,
         strictbounds: strictbounds,
         offset: offset,
         hint: hint,
